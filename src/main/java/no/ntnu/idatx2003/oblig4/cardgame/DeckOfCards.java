@@ -15,6 +15,7 @@ import java.util.List;
 public class DeckOfCards {
   private final char[] suits = {'S', 'H', 'D', 'C'};
   private final List<PlayingCard> cards;
+  private final List<PlayingCard> hand;
 
   /**
    * Constructor that instantiates 52 {@code PlayingCard} objects.
@@ -27,6 +28,7 @@ public class DeckOfCards {
         cards.add(new PlayingCard(suit, i));
       }
     }
+    hand = new ArrayList<>();
   }
 
   /**
@@ -48,22 +50,36 @@ public class DeckOfCards {
   }
 
   /**
+   * Accessor method for the hand of cards.
+   *
+   * @return immutable list containing hand of cards.
+   */
+  public List<PlayingCard> getHand() {
+    return Collections.unmodifiableList(this.hand);
+  }
+
+  /**
    * Function that deals a random hand of cards.
+   * The cards will be added into the hand.
    *
    * @param n amount of cards to deal.
-   * @return Immutable collection of cards.
    */
-  public List<PlayingCard> dealHand(int n) {
+  public void dealHand(int n) {
     if(n < 0 || n > 52) {
       throw new IllegalArgumentException("Please provide a n between 1 and 52.");
     }
-    List<PlayingCard> hand = new ArrayList<>();
     for(int i = 0; i <= n; i++) {
-      hand.add(getCards().get(getRandomInt(1, 52)));
+      this.hand.add(getCards().get(getRandomInt(1, 52)));
     }
-    return Collections.unmodifiableList(hand);
   }
 
+  /**
+   * Utility method to generate a random int in the range of lower and upper.
+   *
+   * @param lower upper bound.
+   * @param upper lower bound.
+   * @return random int.
+   */
   private static int getRandomInt(int lower, int upper) {
     int range = upper - lower + 1;
 
