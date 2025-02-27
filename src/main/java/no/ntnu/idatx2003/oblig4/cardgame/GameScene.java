@@ -1,21 +1,22 @@
 package no.ntnu.idatx2003.oblig4.cardgame;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
+
+import static no.ntnu.idatx2003.oblig4.cardgame.util.ButtonUtil.*;
 
 public class GameScene {
     private static final StackPane root = new StackPane();
-    private static final GridPane gamePane = new GridPane();
     private static final BorderPane screenPane = new BorderPane();
-    private static final Image background = new Image("C:\\Users\\mathi\\Desktop\\Programmering\\CardGame\\src\\main\\resources\\CardBackground.jpg");
+    private static final Image background = new Image("file:src\\main\\resources\\CardBackground.jpg");
     private static final ImageView bg = new ImageView(background);
+    private static final DeckOfCards deckOfCards = new DeckOfCards();
 
     public GameScene() {
     }
@@ -25,14 +26,31 @@ public class GameScene {
             throw new IllegalArgumentException("Stage cannot be null.");
         }
 
+        bg.setFitHeight(600);
+        bg.setFitWidth(800);
+        bg.setPreserveRatio(true);
+        root.getChildren().add(bg);
+
         Button dealHand = new Button("Deal Hand");
         Button checkHand = new Button("Check Hand");
 
-        gamePane.add(dealHand, 0, 10);
-        gamePane.add(checkHand, 1, 10);
-        gamePane.add(bg, 0, 4);
+        buttonSize(dealHand, checkHand);
+        buttonShadow(dealHand, checkHand);
+        buttonStyle(dealHand, checkHand);
 
-        root.getChildren().addAll(gamePane);
+        dealHand.setOnAction(event -> {
+            deckOfCards.dealHand(5);
+            System.out.println("Successfully dealt out hand of cards." + deckOfCards.getHand());
+        });
+
+        VBox buttonBox = new VBox(25);
+        buttonBox.getChildren().addAll(dealHand, checkHand);
+
+        screenPane.setCenter(buttonBox);
+        buttonBox.setAlignment(Pos.CENTER_RIGHT);
+        root.setPadding(new Insets(30));
+
+        root.getChildren().addAll(buttonBox);
 
         return new Scene(root, 800, 600);
     }
