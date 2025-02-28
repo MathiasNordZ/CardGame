@@ -11,47 +11,103 @@ import javafx.stage.Stage;
 
 import static no.ntnu.idatx2003.oblig4.cardgame.util.ButtonUtil.*;
 
+/**
+* The class that represents the main scene of the game.
+*
+* @author Mathias Erik Nord
+* @since 28.02.2025
+* @version 0.0.1
+*/
 public class GameScene {
-    private static final StackPane root = new StackPane();
-    private static final BorderPane screenPane = new BorderPane();
-    private static final Image background = new Image("file:src\\main\\resources\\CardBackground.jpg");
-    private static final ImageView bg = new ImageView(background);
-    private static final DeckOfCards deckOfCards = new DeckOfCards();
+    private static final int SCENE_WIDTH = 800;
+    private static final int SCENE_HEIGHT = 600;
 
+    private final StackPane root;
+    private final BorderPane screenPane;
+    private final ImageView bg;
+    private final DeckOperation deckOfCards;
+    private final CardImage cardImage;
+
+    /**
+     * Constructor that instantiates necessary instances.
+     * Does also set up the background of the scene.
+     */
     public GameScene() {
+        this.root = new StackPane();
+        this.screenPane = new BorderPane();
+        this.deckOfCards = new DeckOfCards();
+        this.cardImage = new CardImage();
+        this.bg = new ImageView(new Image("file:src/main/resources/CardBackground.jpg"));
+
+        setUpBackground();
     }
 
-    public static Scene getScene(Stage stage) {
+    /**
+     * Accessor method to retrieve the scene.
+     *
+     * @param stage the stage to retrieve the scene to.
+     * @return a new scene.
+     */
+    public Scene getScene(Stage stage) {
         if(stage == null) {
             throw new IllegalArgumentException("Stage cannot be null.");
         }
 
-        bg.setFitHeight(600);
-        bg.setFitWidth(800);
-        bg.setPreserveRatio(true);
         root.getChildren().add(bg);
 
-        Button dealHand = new Button("Deal Hand");
-        Button checkHand = new Button("Check Hand");
+        userInterfaceSetup();
 
-        buttonSize(dealHand, checkHand);
-        buttonShadow(dealHand, checkHand);
-        buttonStyle(dealHand, checkHand);
+        return new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
+    }
 
-        dealHand.setOnAction(event -> {
-            deckOfCards.dealHand(5);
-            System.out.println("Successfully dealt out hand of cards." + deckOfCards.getHand());
-        });
+    /**
+     * Private method that does set up the background of the scene.
+     */
+    private void setUpBackground() {
+        bg.setFitHeight(SCENE_HEIGHT);
+        bg.setFitWidth(SCENE_WIDTH);
+        bg.setPreserveRatio(true);
+    }
+
+    /**
+     * Private method that does set up the user interface of the scene.
+     */
+    private void userInterfaceSetup() {
+        Button dealHand = createButton("Deal Hand");
+        Button checkHand = createButton("Check Hand");
+        Button resetDeck = createButton("Reset Deck");
+
+        CardViewInterface cardView = new CardView(cardImage, screenPane);
+        PopupInterface popup = new Popup();
+        ButtonController buttonController = new ButtonController(deckOfCards, cardView, popup);
+
+        dealHand.setOnAction(buttonController);
+        checkHand.setOnAction(buttonController);
+        resetDeck.setOnAction(buttonController);
 
         VBox buttonBox = new VBox(25);
-        buttonBox.getChildren().addAll(dealHand, checkHand);
+        buttonBox.getChildren().addAll(dealHand, checkHand, resetDeck);
 
-        screenPane.setCenter(buttonBox);
+        screenPane.setRight(buttonBox);
         buttonBox.setAlignment(Pos.CENTER_RIGHT);
         root.setPadding(new Insets(30));
 
-        root.getChildren().addAll(buttonBox);
+        root.getChildren().add(screenPane);
 
-        return new Scene(root, 800, 600);
+        root.getChildren().addAll(buttonBox);
+    }
+
+    /**
+     * Private method that creates buttons in a standard style.
+     *
+     * @param buttonText text of the button.
+     * @return a button.
+     */
+    private Button createButton(String buttonText) {
+        Button button = new Button(buttonText);
+        buttonSize(button);
+        buttonStyle(button);
+        buttonShadow(button);
+        return button;
     }
 }

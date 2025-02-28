@@ -4,11 +4,12 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class MainApplication extends Application {
+    GameScene gameScene = new GameScene();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         try {
-            primaryStage.setScene(GameScene.getScene(primaryStage));
+            primaryStage.setScene(gameScene.getScene(primaryStage));
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }

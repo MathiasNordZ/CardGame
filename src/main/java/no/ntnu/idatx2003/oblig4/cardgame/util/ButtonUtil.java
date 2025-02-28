@@ -13,7 +13,7 @@ import javafx.scene.paint.Color;
 * @version 0.0.1
 */
 public class ButtonUtil {
-    private static final String defaultStyle = "-fx-background-color: #D9D9D9; -fx-border-color: #D9D9D9;";
+    private static final String DEFAULT_STYLE = "-fx-background-color: #D9D9D9; -fx-border-color: #D9D9D9;";
 
     private ButtonUtil() {
 
@@ -64,9 +64,9 @@ public class ButtonUtil {
             throw new IllegalArgumentException("Provided button(s) cannot be null.");
         }
         for(Button button : buttons) {
-            button.setStyle(defaultStyle);
+            button.setStyle(DEFAULT_STYLE);
             button.setOnMouseEntered(mouseEvent -> button.setStyle("-fx-background-color: #B1B1B1;  -fx-border-color: #B1B1B1;"));
-            button.setOnMouseExited(mouseEvent -> button.setStyle(defaultStyle));
+            button.setOnMouseExited(mouseEvent -> button.setStyle(DEFAULT_STYLE));
         }
     }
 }

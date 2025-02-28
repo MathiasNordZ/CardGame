@@ -1,9 +1,9 @@
 package no.ntnu.idatx2003.oblig4.cardgame;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * The class that represents a deck of cards.
@@ -12,8 +12,7 @@ import java.util.List;
  * @version 0.0.1
  * @since 23.02.2025
  */
-public class DeckOfCards {
-  private final char[] suits = {'S', 'H', 'D', 'C'};
+public class DeckOfCards implements DeckOperation {
   private final List<PlayingCard> cards;
   private final List<PlayingCard> hand;
 
@@ -22,22 +21,9 @@ public class DeckOfCards {
    * The 52 cards does represent a deck of cards.
    */
   public DeckOfCards() {
-    cards = new ArrayList<>();
-    for(char suit : getSuits()) {
-      for(int i = 1; i <= 13; i++) {
-        cards.add(new PlayingCard(suit, i));
-      }
-    }
-    hand = new ArrayList<>();
-  }
-
-  /**
-   * Accessor method for the suits of a card.
-   *
-   * @return the suit chars.
-   */
-  public char[] getSuits() {
-    return this.suits;
+    this.cards = new ArrayList<>();
+    this.hand = new ArrayList<>();
+    resetDeck();
   }
 
   /**
@@ -54,8 +40,9 @@ public class DeckOfCards {
    *
    * @return immutable list containing hand of cards.
    */
+  @Override
   public List<PlayingCard> getHand() {
-    return Collections.unmodifiableList(this.hand);
+    return new ArrayList<>(hand);
   }
 
   /**
@@ -64,25 +51,31 @@ public class DeckOfCards {
    *
    * @param n amount of cards to deal.
    */
+  @Override
   public void dealHand(int n) {
-    if(n < 0 || n > 52) {
+    if(n < 1 || n > 52) {
       throw new IllegalArgumentException("Please provide a n between 1 and 52.");
+    } else if(cards.size() < n) {
+      throw new NoSuchElementException("The deck doesn't contain enough cards.");
     }
-    for(int i = 0; i <= n; i++) {
-      this.hand.add(getCards().get(getRandomInt(1, 52)));
+    this.hand.clear();
+    Collections.shuffle(cards);
+    for(int i = 0; i < n; i++) {
+      this.hand.add(cards.removeFirst());
     }
   }
 
   /**
-   * Utility method to generate a random int in the range of lower and upper.
-   *
-   * @param lower upper bound.
-   * @param upper lower bound.
-   * @return random int.
+   * Function that will reset the deck.
    */
-  private static int getRandomInt(int lower, int upper) {
-    int range = upper - lower + 1;
-
-    return (int)(Math.random() * range) + lower;
+  @Override
+  public void resetDeck() {
+    cards.clear();
+    for(char suit : new char[]{'S', 'H', 'D', 'C'}) {
+      for(int i = 1; i <= 13; i++) {
+        cards.add(new PlayingCard(suit, i));
+      }
+    }
+    hand.clear();
   }
 }
