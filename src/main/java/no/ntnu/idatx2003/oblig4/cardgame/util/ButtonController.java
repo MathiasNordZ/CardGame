@@ -1,8 +1,12 @@
-package no.ntnu.idatx2003.oblig4.cardgame;
+package no.ntnu.idatx2003.oblig4.cardgame.util;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
+import no.ntnu.idatx2003.oblig4.cardgame.card.CardViewInterface;
+import no.ntnu.idatx2003.oblig4.cardgame.deck.DeckOperation;
+import no.ntnu.idatx2003.oblig4.cardgame.popup.PopupInterface;
+
 import java.util.NoSuchElementException;
 
 /**

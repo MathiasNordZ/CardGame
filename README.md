@@ -1,18 +1,12 @@
 # Oblig 4 - Card Game
 
-Bruk dette prosjektet som utgangspunkt for Oblig 4 i IDATG2003.
+Mandatory assignment in the course Programming 2 @ Norwegian University of Technology and Science.
 
-I Oppgave 1, der du får oppgitt koden til klassen PlayingCard, gjør som følger:
-1. Klon dette repositoriet i GitHub til mappen på din harddisk der du ønsker å jobbe videre med denne oppgaven.
-1. Følg deretter oppgaveteksten steg for steg.
+The whole idea behind this project is to learn how to make a GUI application in JavaFX. The application is has a GUI, where the user is able to deal a hand of 5 cards from a deck of 52 cards. The 5 random cards are then displayed on the screen. The user is hen able to click the "Check Hand" button, which displays various facts about the cards in hand.
 
-**NB!** Du må endre goupID og artifactID i pom-filen til noe du mener passer.
-
-**Tips for IntelliJ:** Gå i menyen ***"View->Tool Windows->TODO"***. 
-Da får du opp et TODO-vindu nederst i IntelliJ. Dette vinduet viser 
-samtlige steder i koden der det er skrevet inn "TODO:". En grei måte
-å legge inn små "huskelapper" til seg selv.
-
-Husk å commit-e med jevne mellomrom.
-
-LYKKE TIL!
+# How To Run
+```
+git clone git@github.com:MathiasNordZ/CardGame.git
+mvn clean install
+mvn javafx:run
+```

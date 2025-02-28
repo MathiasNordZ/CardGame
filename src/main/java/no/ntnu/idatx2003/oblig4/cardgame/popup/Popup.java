@@ -1,8 +1,9 @@
-package no.ntnu.idatx2003.oblig4.cardgame;
+package no.ntnu.idatx2003.oblig4.cardgame.popup;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import no.ntnu.idatx2003.oblig4.cardgame.deck.DeckOperation;
 
 import java.util.Optional;
 
