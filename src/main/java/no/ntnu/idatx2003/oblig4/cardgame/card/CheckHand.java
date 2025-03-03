@@ -4,15 +4,18 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
-* Class that will handle the operations of the 'check hand' button.
-*
-* @author Mathias Erik Nord
-* @since 28.02.2025
-* @version 0.0.1
-*/
+ * Class that will handle the operations of the 'check hand' button.
+ *
+ * @author Mathias Erik Nord
+ * @since 28.02.2025
+ * @version 0.0.1
+ */
 public class CheckHand {
   private final String errorString;
 
+  /**
+   * Constructor, does set a common error string.
+   */
   public CheckHand() {
     errorString = "The hand of cards is null/empty";
   }
@@ -24,13 +27,10 @@ public class CheckHand {
    * @return sum of cards.
    */
   public int sumOfCards(List<PlayingCard> handOfCards) {
-    if(handOfCards == null || handOfCards.isEmpty()) {
+    if (handOfCards == null || handOfCards.isEmpty()) {
       throw new NoSuchElementException(errorString);
     }
-    return handOfCards
-        .stream()
-        .mapToInt(PlayingCard::getFace)
-        .sum();
+    return handOfCards.stream().mapToInt(PlayingCard::getFace).sum();
   }
 
   /**
@@ -40,14 +40,13 @@ public class CheckHand {
    * @return string of the cards 'H'.
    */
   public String amountOfHearts(List<PlayingCard> handOfCards) {
-    if(handOfCards == null || handOfCards.isEmpty()) {
+    if (handOfCards == null || handOfCards.isEmpty()) {
       throw new NoSuchElementException(errorString);
     }
     StringBuilder hearts = new StringBuilder();
     handOfCards.stream()
         .filter(card -> card.getSuit() == 'H')
-        .forEach(card -> hearts.append(card.getSuit())
-            .append(card.getFace()).append(" "));
+        .forEach(card -> hearts.append(card.getSuit()).append(card.getFace()).append(" "));
 
     return hearts.toString().trim();
   }
@@ -62,7 +61,9 @@ public class CheckHand {
     if (handOfCards == null || handOfCards.isEmpty()) {
       throw new NoSuchElementException(errorString);
     }
-    return handOfCards.stream().anyMatch(card -> card.getSuit() == 'S' && card.getFace() == 12) ? "Yes" : "no";
+    return handOfCards.stream().anyMatch(card -> card.getSuit() == 'S' && card.getFace() == 12)
+        ? "Yes"
+        : "no";
   }
 
   /**
@@ -72,7 +73,7 @@ public class CheckHand {
    * @return true if all cards are same suit, false otherwise.
    */
   public boolean flush(List<PlayingCard> handOfCards) {
-    if(handOfCards == null || handOfCards.isEmpty()) {
+    if (handOfCards == null || handOfCards.isEmpty()) {
       throw new NoSuchElementException(errorString);
     }
     char suit = handOfCards.getFirst().getSuit();
