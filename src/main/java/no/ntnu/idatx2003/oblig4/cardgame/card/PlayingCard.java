@@ -26,6 +26,18 @@ public class PlayingCard {
    * @throws IllegalArgumentException if suit or face have invalid values.
    */
   public PlayingCard(char suit, int face) {
+    validation(suit, face);
+    this.suit = suit;
+    this.face = face;
+  }
+
+  /**
+   * Validation method that validates the constructor inputs.
+   *
+   * @param suit the suit of the card.
+   * @param face the face of the card.
+   */
+  private void validation(char suit, int face) {
     if (suit != 'H' && suit != 'D' && suit != 'C' && suit != 'S') {
       throw new IllegalArgumentException("Parameter suit must be one of H, D, C or S");
     }
@@ -33,8 +45,6 @@ public class PlayingCard {
     if (face < 1 || face > 13) {
       throw new IllegalArgumentException("Parameter face must be a number between 1 to 13");
     }
-    this.suit = suit;
-    this.face = face;
   }
 
   /**
